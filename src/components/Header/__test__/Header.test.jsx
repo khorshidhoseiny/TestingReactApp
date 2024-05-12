@@ -2,6 +2,8 @@ import { expect, test } from "vitest";
 import Header from "../Header";
 import { render, screen } from "@testing-library/react";
 
+//  الویت آخر ما getByTestIdالویت های اول ما هستند و  getByText,getByRol
+
 test("Header Test #1", () => {
   render(<Header title="React App" />);
   const h1Element = screen.getByText(/react/i);
@@ -22,4 +24,35 @@ test("Header Test #3", () => {
   render(<Header title="React App" />);
   const h1Element = screen.getByTitle("header");
   expect(h1Element).toBeInTheDocument();
+});
+
+// الویت آخر ما است
+test("Header Test #4", () => {
+  render(<Header title="React App" />);
+  const h1Element = screen.getByTestId("header-2");
+  expect(h1Element).toBeInTheDocument();
+});
+
+// FINDBY methods:
+
+test("Header Test #5", async () => {
+  render(<Header title="React App" />);
+  const h1Element = await screen.findByText(/react/i);
+  expect(h1Element).toBeInTheDocument();
+});
+
+//QUERY methods:
+
+test("Header Test #6", () => {
+  render(<Header title="React App" />);
+  const h1Element = screen.queryByText(/vue/i); //Not Exist in dom
+  expect(h1Element).not.toBeInTheDocument();
+});
+
+// GETALL
+
+test("Header Test #7", () => {
+  render(<Header title="React App" />); //hاون هدینگ هاییو میده که
+  const headings = screen.queryAllByRole("heading");
+  expect(headings.length).toBe(2);
 });
